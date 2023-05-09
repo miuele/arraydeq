@@ -74,9 +74,16 @@ void test2() {
 	print_content(fifo);
 }
 
+void test3() {
+	arraydeq<int, 5> fifo{2, 5, 4, 9, 8, 1};
+	print_content(fifo);
+}
+
 int main() {
 	test1();
 	std::cout << "---" << std::endl;
 	test2();
+	std::cout << "---" << std::endl;
+	test3();
 }
 

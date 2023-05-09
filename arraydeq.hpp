@@ -14,6 +14,17 @@ struct arraydeq {
 	{
 	}
 
+	arraydeq(std::initializer_list<T> init)
+		: arraydeq()
+	{
+		for (auto it = std::begin(init)
+				; !is_full() && it != std::end(init)
+				; ++it)
+		{
+			push_back(*it);
+		}
+	}
+
 	template <class ...Args>
 	void emplace_back(Args &&...args) {
 		auto tail = (head_ + size_) % N;
