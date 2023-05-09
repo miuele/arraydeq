@@ -43,6 +43,10 @@ public:
 		}
 	}
 
+	~arraydeq() {
+		clear();
+	}
+
 	template <class ...Args>
 	void emplace_back(Args &&...args) {
 		auto tail = (head_ + size_) % N;
@@ -203,16 +207,27 @@ private:
 
 	template <class ...Args>
 	void construct_element_at(std::size_t index, Args &&...args) {
-		new(&storage_[index].obj) T{std::forward<Args>(args)...};
+		storage_[index].construct(std::forward<Args>(args)...);
 	}
 
 	void destruct_element_at(std::size_t index) {
-		element_at(index).~T();
+		storage_[index].destruct();
 	}
 
-	union {
+	union storage_cell {
+		storage_cell() {}
+		~storage_cell() {}
+
+		template <class ...Args>
+		void construct(Args &&...args) {
+			new(&obj) T{std::forward<Args>(args)...};
+		}
+		void destruct() {
+			obj.~T();
+		}
 		T obj;
 	} storage_[N];
+
 	std::size_t head_;
 	std::size_t size_;
 };

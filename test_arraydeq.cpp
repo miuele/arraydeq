@@ -117,6 +117,7 @@ void test4() {
 	print_content(fifo2);
 	fifo2.resize(10);
 	fifo2.push_back(101);
+	fifo2.push_front(999);
 	print_content(fifo2);
 	std::cout << std::boolalpha << (fifo == fifo2) << std::endl;
 }
