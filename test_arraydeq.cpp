@@ -103,9 +103,7 @@ void test3() {
 void test4() {
 	arraydeq<int, 100> fifo;
 	print_content(fifo);
-	for (int i = 0; i < 100; ++i) {
-		fifo.push_back(0);
-	}
+	fifo.resize(100);
 	print_content(fifo);
 	std::iota(std::begin(fifo), std::end(fifo), 1);
 	print_content(fifo);
@@ -116,6 +114,9 @@ void test4() {
 	print_content(fifo2);
 	std::cout << std::boolalpha << (fifo == fifo2) << std::endl;
 	fifo2[50] = -1;
+	print_content(fifo2);
+	fifo2.resize(10);
+	fifo2.push_back(101);
 	print_content(fifo2);
 	std::cout << std::boolalpha << (fifo == fifo2) << std::endl;
 }

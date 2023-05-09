@@ -99,6 +99,27 @@ public:
 		return item;
 	}
 
+	void resize(std::size_t n) {
+		if (n < size_) {
+			const auto ndel = size_ - n;
+			auto index = (head_ + size_ - 1) % N;
+			for (std::size_t i = 0; i < ndel; ++i) {
+				destruct_element_at(index);
+				index = (N + index - 1) % N;
+			}
+			size_ = n;
+		} else {
+			const auto nadd = n - size_;
+			for (std::size_t i = 0; i < nadd; ++i) {
+				emplace_back();
+			}
+		}
+	}
+
+	void clear() {
+		resize(0);
+	}
+
 	constexpr std::size_t size() const {
 		return size_;
 	}
