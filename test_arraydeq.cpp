@@ -1,9 +1,12 @@
 #include <iostream>
+#include <algorithm>
+#include <iterator>
 #include "arraydeq.hpp"
 
 using arraylike::arraydeq;
 
-void print_content(const arraydeq<int, 5> &fifo) {
+template <std::size_t N>
+void print_content(const arraydeq<int, N> &fifo) {
 	for (std::size_t i = 0; i < fifo.size(); ++i) {
 		std::cout << fifo[i] << ", ";
 	}
@@ -75,8 +78,25 @@ void test2() {
 }
 
 void test3() {
-	arraydeq<int, 5> fifo{2, 5, 4, 9, 8, 1};
+	const arraydeq<int, 5> fifo{2, 5, 4, 9, 8, 1};
 	print_content(fifo);
+	for (auto x : fifo) {
+		std::cout << x << " : ";
+	}
+	std::cout << std::endl;
+	std::for_each(
+		std::make_reverse_iterator(fifo.end()),
+		std::make_reverse_iterator(fifo.begin()),
+		[](auto x) {
+			std::cout << x << " : ";
+		}
+	);
+	std::cout << std::endl;
+	std::cout << "len: " << std::distance(fifo.begin(), fifo.end()) << std::endl;
+	arraydeq<int, 10> a{1, 2, 3};
+	arraydeq<int, 10> b{4, 5, 6};
+	a.swap(b);
+	print_content(a);
 }
 
 int main() {
