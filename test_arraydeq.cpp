@@ -1,5 +1,6 @@
 #include <iostream>
 #include <algorithm>
+#include <numeric>
 #include <iterator>
 #include "arraydeq.hpp"
 
@@ -99,11 +100,33 @@ void test3() {
 	print_content(a);
 }
 
+void test4() {
+	arraydeq<int, 100> fifo;
+	print_content(fifo);
+	for (int i = 0; i < 100; ++i) {
+		fifo.push_back(0);
+	}
+	print_content(fifo);
+	std::iota(std::begin(fifo), std::end(fifo), 1);
+	print_content(fifo);
+	arraydeq<int, 100> fifo2;
+	print_content(fifo2);
+	std::cout << std::boolalpha << (fifo == fifo2) << std::endl;
+	fifo2 = fifo;
+	print_content(fifo2);
+	std::cout << std::boolalpha << (fifo == fifo2) << std::endl;
+	fifo2[50] = -1;
+	print_content(fifo2);
+	std::cout << std::boolalpha << (fifo == fifo2) << std::endl;
+}
+
 int main() {
 	test1();
 	std::cout << "---" << std::endl;
 	test2();
 	std::cout << "---" << std::endl;
 	test3();
+	std::cout << "---" << std::endl;
+	test4();
 }
 
